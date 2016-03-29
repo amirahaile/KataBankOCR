@@ -4,16 +4,15 @@
 
 /*jshint multistr: true */
 
-var expect = chai.expect;
 var assert = require('assert');
 
-var string = "  _  _     _  _  _  _  _\n| _| _||_||_ |_   ||_||_|\n||_  _|  | _||_|  ||_| _|\n \
-  _  _     _  _  _  _  _\n| _| _||_||_ |_   ||_||_|\n||_  _|  | _||_|  ||_| _|";
 
 describe('formatEntries()', function(){
-  it ('returns an array with several sub-arrays', function(){
-    var result = formatEntries(string);
+  var string = "  _  _     _  _  _  _  _\n| _| _||_||_ |_   ||_||_|\n||_  _|  | _||_|  ||_| _|\n \
+  _  _     _  _  _  _  _\n| _| _||_||_ |_   ||_||_|\n||_  _|  | _||_|  ||_| _|";
+  var result = formatEntries(string);
 
+  it ('returns an array with several sub-arrays', function(){
     assert(Array.isArray(result), "The array holding all the entries.");
     assert(Array.isArray(result[0]), "The array holding the first entry.");
     assert(Array.isArray(result[0][0]), "The array holding the first entry's first line.");
@@ -23,8 +22,6 @@ describe('formatEntries()', function(){
   });
 
   it ('returns a string inside of those sub-arrays', function(){
-    var result = formatEntries(string);
-
     for (i = 0; i < result.length; i++) {
       for (j = 0; j < result[i].length; j++) {
         assert(String.isString(result[i][j]));
@@ -33,17 +30,36 @@ describe('formatEntries()', function(){
   });
 
   it ('removes the blank line that separates the entries', function(){
-    var result = formatEntries(string);
     var noBlank = true;
 
     for (i = 0; i < result.length; i++) {
       for (j = 0; j < result[i].length; j++) {
-        if (result[i][j].empty()) {
+        if (result[i][j].length === 0) {
           noBlank = false;
         }
       }
     }
 
     assert(noBlank);
+  });
+});
+
+describe('renderNumbers()', function(){
+  var entries = [[["  _  _     _  _  _  _  _"],["| _| _||_||_ |_   ||_||_|"],
+  ["||_  _|  | _||_|  ||_| _|"]], [["_  _     _  _  _  _  _"],
+  ["| _| _||_||_ |_   ||_||_|"], ["||_  _|  | _||_|  ||_| _|"]]];
+  var accountNumbers = renderNumbers(entries);
+
+  it ('returns an array with sub-arrays of account numbers', function(){
+    assert(Array.isArray(accountNumbers), "The array holding all the account numbers.");
+    assert(Array.isArray(accountNumbers[0]), "The first account number.");
+    assert(Array.isArray(accountNumbers[1]), "The second account number.");
+  });
+
+  it ('should return account numbers that are nine digits', function(){
+    var accountNumber = accountNumbers[0];
+
+    assert(Array.isArray(accountNumber), "Best format for Story 2.");
+    assert(accountNumber.length == 9);
   });
 });
