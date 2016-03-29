@@ -3,3 +3,29 @@ Frontend for KataBankOCR
 Copyright (c) 2016 Amira Hailemariam
 Coding challenge for TestDouble
 -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Kata Bank OCR</title>
+    <script src="bankOCR.js"></script>
+  </head>
+  <body>
+
+    <input type="file" id="file" name="files[]" />
+    <output></output>
+
+  </body>
+
+  <script>
+    if (window.File && window.FileReader && window.Blob) {
+      // Enable
+      document.getElementById('file').addEventListener('change', readFile, false);
+    } else {
+      // Disable
+      document.getElementById('file').disabled = true;
+      alert('The File APIs used by this program are not supported by your browser.')
+    }
+  </script>
+</html>
